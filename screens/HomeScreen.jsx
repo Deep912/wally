@@ -1,4 +1,4 @@
-import { View, Text ,Image , TextInput , searchTerm , setSearchTerm, Button , ScrollView} from 'react-native'
+import { View, Text ,Image , TextInput , searchTerm , setSearchTerm, Button , ScrollView , StyleSheet} from 'react-native'
 import React, { useState } from 'react';
 import { bg } from '../assets'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -14,8 +14,8 @@ const HomeScreen = () => {
     <View className="flex-1 relative">
       <Image source={bg}/>
       <SafeAreaView className="absolute z-10 flex w-full h-full items-center justify-start gap-4 ">
-      <View className="w-full px-6 flex-row items-center justify-between">
-      <Text className="text-3xl text-gray-50 font-bold">
+      <View className="w-full px-6 flex-row items-center justify-between pt-4">
+      <Text className="text-3xl text-gray-50 font-bold" style={{ letterSpacing: 4 }}>
     Explore {'\n'}
     Collections
     </Text>
@@ -25,20 +25,53 @@ const HomeScreen = () => {
         We have best collections of Hindu Wallpaper.
         </Text>
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }} >
-      <TextInput
-        style={{ flex: 1, borderWidth: 1, borderColor: 'linear-gradient(90deg, rgba(242,130,66,1) 0%, rgba(242,76,38,1) 33%, rgba(167,56,45,1) 66%, rgba(191,73,151,1) 100%)'
-, borderRadius: 5, padding: 6 }}
-        placeholder="Search..."
-        value={searchTerm}
-        onChangeText={setSearchTerm}
-     / >
-      <Icon name="search" size={24}  color="#F28242" onPress={handleSearch} />
-    </View>
+      <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
+            <LinearGradient
+              colors={['rgba(242,130,66,1)', 'rgba(242,76,38,1)', 'rgba(167,56,45,1)', 'rgba(191,73,151,1)']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{
+                flex: 1,
+                borderRadius: 15,
+                padding: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              
+              <TextInput
+               style={[styles.searchBar, searchTerm.length > 0 && { color: '#FFF' }]}
+                placeholder="Ganesh, Shiv..."
+                placeholderTextColor="#A4A4A4"
+                value={searchTerm}
+                onChangeText={setSearchTerm}
+              />
+            </LinearGradient>
+            <Icon name="search" size={24} color="#F28242" onPress={handleSearch} style={{ marginLeft: -40 }} />
+          </View>
       </SafeAreaView>
     </View>
+
+
+
+
+
     
   )
 }
 
-export default HomeScreen
+const styles = StyleSheet.create({
+  
+  searchBar: {
+    margin: 1,
+    flexBasis: '99%',
+    borderRadius: 15,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#272D3E',
+    letterSpacing: 2
+  }
+})
+
+export default HomeScreen	
