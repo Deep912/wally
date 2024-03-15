@@ -9,7 +9,23 @@ import MasonryList from '@react-native-seoul/masonry-list';
 const HomeScreen = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
-    
+    const [defaultCategory, setDefaultCategory] = useState("woman"); // Default category
+
+    useEffect(() => {
+        // Perform filtering when default category changes
+        filterData(defaultCategory);
+    }, [defaultCategory]);
+
+    const filterData = (category) => {
+        const filteredData = data.filter(item => item.name === category);
+        setCategories(filteredData);
+    };
+    useEffect(() => {
+      // Set default category and filter data when component mounts
+      setDefaultCategory("category");
+      filterData("category");
+  }, []);
+
     const [categories, setCategories] = useState(null);
     const data = [
       {id: 1, name: "category", imageURL: "https://cdn.pixabay.com/photo/2024/02/29/12/41/woman-8604350_1280.jpg"},
@@ -67,7 +83,7 @@ const HomeScreen = () => {
             <Icon name="search" size={24} color="#F28242"  style={{ marginLeft: -40 }} />
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }} className="w-full">
-          <TouchableOpacity 
+            <TouchableOpacity 
             onPress={() => setDefaultCategory("category")}
             >
               <Text className="text-gray-50 text-2xl">Category</Text>
@@ -83,8 +99,19 @@ const HomeScreen = () => {
               <Text className="text-gray-50 text-2xl">Latest</Text>
             </TouchableOpacity>
           </View>
-           
-        
+          <ScrollView className="w-full h-full px-4">
+            {categories ? (
+              <MasonryList
+                data={categories}
+                keyExtractor={(item) => item.id}
+                numColumns={2}
+                showsVerticalScrollIndicator={false}
+                renderItem={({item}) => <CardItem data={item} />}
+              />
+            ) : (
+              <ActivityIndicator color={'#F24C26'} size={'large'}/>
+            )}
+          </ScrollView>
 
         
         </SafeAreaView>
@@ -93,6 +120,14 @@ const HomeScreen = () => {
 }
 
 // displaying the mashnory list
+
+const CardItem = ({data}) => {
+  return(
+    <TouchableOpacity style={{height: Math.round(Math.random() * 100 + 200)}} className = "m-1 rounded-md relative overflow-hidden ">
+      <Image source={{uri: data.imageURL}} className="w-full h-full object-cover" />
+    </TouchableOpacity>
+  );
+}
 
 
 
