@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import { View, Image } from 'react-native';
-import { SplashScreen } from '../assets';
+import { View, Image, StyleSheet } from 'react-native';
+import { om } from '../assets';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const OnBoardingScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    // Set a timeout to navigate to HomeScreen after 3 seconds
+    // Set a timeout to navigate to HomeScreen after 8 seconds
     const timeout = setTimeout(() => {
       navigation.navigate('HomeScreen');
     }, 800);
@@ -17,10 +18,27 @@ const OnBoardingScreen = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Image source={SplashScreen}  />
-    </View>
+    <LinearGradient
+      colors={['#272d3e', '#432a4d']}
+      style={styles.container}
+    >
+      <View style={styles.content}>
+        <Image source={om} />
+      </View>
+    </LinearGradient>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  content: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default OnBoardingScreen;
